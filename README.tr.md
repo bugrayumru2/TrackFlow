@@ -7,7 +7,7 @@
 Trackpad’in kenarlarından ses, dahili ekran parlaklığı ve Spotify’ı kontrol eden,
 menü çubuğunda çalışan açık kaynak macOS uygulaması.
 
-> **0.1.0 alfa:** Kaynak yayınına hazırlanmış sürüm. Henüz resmî, noter onaylı
+> **0.1.0 alfa:** Kaynak kod herkese açık olarak yayınlandı. Henüz resmî, noter onaylı
 > bir uygulama paketi yayınlanmadı. Şimdilik kaynak koddan derleyin.
 
 ![Kontrol ekranı — örnek değerlerle arayüz önizlemesi](docs/images/controls.png)

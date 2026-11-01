@@ -33,9 +33,19 @@ for edge in [EdgeVolumeGesture.Edge.left, .right] {
         assert(gesture.process(id: 1, x: x, y: y) == expected)
     }
 }
-for action in [SpotifyAction.previous, .playPause, .next] {
-    let script = NSAppleScript(source: "tell application id \"com.spotify.client\" to \(action.command)")!
-    var error: NSDictionary?
-    assert(script.compileAndReturnError(&error), "Spotify dictionary rejected command")
+for (action, expected) in [(SpotifyAction.previous, "previous track"), (.playPause, "playpause"), (.next, "next track")] {
+    assert(action.command == expected)
 }
-print("Media routing, physical-click gating, release handling, edge regression, Spotify script compilation: passed.")
+let spotifyAvailable = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.spotify.client") != nil
+    && ProcessInfo.processInfo.environment["TRACKFLOW_TEST_WITHOUT_SPOTIFY"] != "1"
+if spotifyAvailable {
+    for action in [SpotifyAction.previous, .playPause, .next] {
+        let script = NSAppleScript(source: "tell application id \"com.spotify.client\" to \(action.command)")!
+        var error: NSDictionary?
+        assert(script.compileAndReturnError(&error), "Spotify dictionary rejected command")
+    }
+    print("Spotify dictionary compilation: passed.")
+} else {
+    print("SKIP: Spotify dictionary compilation requires the installed Spotify app.")
+}
+print("Media routing, physical-click gating, release handling, edge regression and fixed commands: passed.")

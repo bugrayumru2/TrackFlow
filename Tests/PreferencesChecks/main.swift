@@ -52,9 +52,16 @@ struct PreferencesChecks {
         assert(SpotifyNowPlaying.artworkURL(from: "https://i.scdn.co/image/example") != nil)
         assert(SpotifyNowPlaying.artworkURL(from: "file:///private/test") == nil)
         assert(SpotifyNowPlaying.artworkURL(from: "https://example.com/image") == nil)
-        let script = NSAppleScript(source: SpotifyController.nowPlayingScript)!
-        var error: NSDictionary?
-        assert(script.compileAndReturnError(&error))
-        print("Settings persistence, validation, exclusions, dynamic routing, cooldown and Spotify metadata script: passed.")
+        let spotifyAvailable = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.spotify.client") != nil
+            && ProcessInfo.processInfo.environment["TRACKFLOW_TEST_WITHOUT_SPOTIFY"] != "1"
+        if spotifyAvailable {
+            let script = NSAppleScript(source: SpotifyController.nowPlayingScript)!
+            var error: NSDictionary?
+            assert(script.compileAndReturnError(&error))
+            print("Spotify metadata dictionary compilation: passed.")
+        } else {
+            print("SKIP: Spotify metadata compilation requires the installed Spotify app.")
+        }
+        print("Settings persistence, validation, exclusions, dynamic routing, cooldown and artwork URL policy: passed.")
     }
 }

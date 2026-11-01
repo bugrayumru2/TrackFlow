@@ -5,12 +5,14 @@
 
 [English](README.md) · [Türkçe](README.tr.md)
 
+[![Build and test](https://github.com/bugrayumru2/TrackFlow/actions/workflows/ci.yml/badge.svg)](https://github.com/bugrayumru2/TrackFlow/actions/workflows/ci.yml)
+
 Turn the edges of your Mac trackpad into deliberate volume, brightness and
 Spotify shortcuts. TrackFlow stays in the menu bar and gives you a small,
 nonactivating feedback panel without interrupting your work.
 
-> **0.1.0 alpha:** source release preparation. No official notarized binary has
-> been published. Build from source until a verified release is available.
+> **0.1.0 alpha:** source is publicly available. No official notarized binary
+> has been published. Build from source until a verified release is available.
 
 ![TrackFlow controls — interface preview with sample values](docs/images/controls.png)
 
@@ -48,7 +50,7 @@ Intel hardware and older macOS runtime behavior still need community testing.
 
 ## Build from source
 
-1. Clone or download this repository.
+1. Clone or download [bugrayumru2/TrackFlow](https://github.com/bugrayumru2/TrackFlow).
 2. Open **TrackFlow.xcodeproj** in Xcode.
 3. Select **TrackFlow → My Mac**.
 4. Build and run. If distributing a build, use your own signing identity.
@@ -125,8 +127,9 @@ and UI update isolation. Workspace checks use local test preferences and do
 not start hardware monitoring or register a login item.
 
 GitHub Actions uses the official [xcode-27 runner image](https://github.blog/changelog/2026-10-15-xcode-27-runner-image-generally-available/), checks Debug and
-Release, and retains an explicitly unsigned developer artifact. The workflow
-has been prepared; its first hosted run happens after repository publication.
+Release, and retains an explicitly unsigned developer artifact. Live results are available from the build badge above. Spotify dictionary
+compilation is optional when Spotify is not installed; core logic checks
+always run. Locally, TRACKFLOW_TEST_WITHOUT_SPOTIFY=1 exercises that CI path.
 
 ## Releases, contributions and license
 

@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 — prepared, not yet published
+## 0.1.0 — 2026-11-02 (source alpha)
 
 - Absolute side-edge volume and built-in brightness control.
 - Deliberate swipe activation and typing cooldown.

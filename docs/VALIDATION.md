@@ -16,10 +16,18 @@ Passed locally:
 - Shell syntax and staged-diff whitespace checks.
 
 Not yet exercised:
-- First GitHub-hosted workflow execution or repository publication.
 - Developer ID signing and notarization (no release credentials used).
 - Clean-machine install, a real login cycle and minimum-macOS/Intel runtime acceptance.
 - Physical controls after the bundle-identity change; refresh macOS permissions for this app identity.
 
 The local unsigned ZIP is a developer artifact, not a verified public installer.
 The source is prepared for review/publication independently of binary distribution.
+
+## Source publication — 2026-11-02
+
+Public repository: https://github.com/bugrayumru2/TrackFlow
+
+Hosted CI results: https://github.com/bugrayumru2/TrackFlow/actions/workflows/ci.yml
+
+CI always runs core logic checks. Spotify dictionary compilation runs only
+when the Spotify app is installed; local installed-app compilation passed.
