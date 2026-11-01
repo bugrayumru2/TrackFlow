@@ -1,0 +1,41 @@
+name: Build and test
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  macos:
+    runs-on: xcode-27
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Toolchain
+        run: xcodebuild -version
+      - name: Logic checks
+        run: ./scripts/check.sh
+      - name: Debug build
+        run: ./scripts/build.sh Debug
+      - name: Localization
+        run: ./scripts/check-localization.sh "$PWD/.build/DerivedData/Build/Products/Debug/TrackFlow.app"
+      - name: Workspace checks
+        run: python3 scripts/check-workspace.py
+      - name: Release build
+        run: ./scripts/build.sh Release
+      - name: Verify Release metadata
+        run: python3 scripts/verify-release.py .build/DerivedData/Build/Products/Release/TrackFlow.app
+      - name: Package unsigned CI artifact
+        run: |
+          mkdir -p .build/artifacts
+          ditto -c -k --sequesterRsrc --keepParent .build/DerivedData/Build/Products/Release/TrackFlow.app .build/artifacts/TrackFlow-unsigned.zip
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: TrackFlow-unsigned-developer-build
+          path: .build/artifacts/TrackFlow-unsigned.zip
+          retention-days: 7
